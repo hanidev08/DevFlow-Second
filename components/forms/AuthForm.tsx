@@ -1,8 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import {
+  DefaultValues,
+  FieldValues,
+  Path,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { z, ZodType } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,14 +21,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DefaultValues, FieldValues, Path } from "react-hook-form";
-import { ZodType } from "zod";
 import Link from "next/link";
 import ROUTES from "@/constants/routes";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;
-  defaultValues: T;
+  defaultVaules: T;
   onSubmit: (data: T) => Promise<{ success: boolean }>;
   formType: "SIGN_IN" | "SIGN_UP";
 }
@@ -30,26 +34,22 @@ interface AuthFormProps<T extends FieldValues> {
 const AuthForm = <T extends FieldValues>({
   formType,
   schema,
-  defaultValues,
+  defaultVaules,
   onSubmit,
 }: AuthFormProps<T>) => {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: defaultValues as DefaultValues<T>,
+    defaultValues: defaultVaules as DefaultValues<T>,
   });
 
   const handleSubmit: SubmitHandler<T> = async () => {};
 
-  const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign Up";
+  const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign up";
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-6 mt-10"
-      >
-        {Object.keys(defaultValues).map((field) => (
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-10">
+        {Object.keys(defaultVaules).map((field) => (
           <FormField
             key={field}
             control={form.control}
@@ -77,19 +77,17 @@ const AuthForm = <T extends FieldValues>({
         ))}
         <Button
           disabled={form.formState.isSubmitting}
-          type="submit"
           className=" primary-gradient paragraph-medium min-h-12 w-full rounded-2 px-4 py-3 font-inter !text-light-900"
         >
           {form.formState.isSubmitting
             ? buttonText === "Sign In"
-              ? "Sign In..."
-              : "Signing Up..."
+              ? "Signing In..."
+              : "Signug Up..."
             : buttonText}
         </Button>
-
         {formType === "SIGN_IN" ? (
           <p>
-            Don't have an account?{" "}
+            Dont't have an account?{" "}
             <Link
               href={ROUTES.SIGN_UP}
               className=" paragraph-semibold primary-text-gradient"
