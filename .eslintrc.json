@@ -1,10 +1,12 @@
+
 {
   "extends": [
     "next/core-web-vitals",
     "next/typescript",
-    "standerd","plugin:tailwindcss/recommended",
+    "standard",
+    "plugin:tailwindcss/recommended",
     "prettier"
-],
+  ],
   "plugins": ["import"],
   "rules": {
     "import/order": [
@@ -33,5 +35,13 @@
         }
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }
