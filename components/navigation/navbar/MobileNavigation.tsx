@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
 import {
   Sheet,
   SheetClose,
@@ -8,15 +8,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import ROUTES from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import ROUTES from "@/constants/routes";
+import { Button } from "@/components/ui/button";
 import NavLinks from "./NavLinks";
 
 const MobileNavigation = () => {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Image
           src="/icons/hamburger.svg"
           width={36}
@@ -41,9 +42,9 @@ const MobileNavigation = () => {
             Dev<span className=" text-primary-500">Flow</span>
           </p>
         </Link>
-        <div className=" no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
+        <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
-            <section className=" flex flex-col h-full gap-6 pt-16">
+            <section className="flex h-full flex-col gap-6 pt-16">
               <NavLinks isMobileNav />
             </section>
           </SheetClose>
@@ -58,7 +59,7 @@ const MobileNavigation = () => {
             </SheetClose>
 
             <SheetClose asChild>
-              <Link href={ROUTES.SIGN_IN}>
+              <Link href={ROUTES.SIGN_UP}>
                 <Button className=" small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
                   Sign Up
                 </Button>
